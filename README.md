@@ -233,7 +233,7 @@ gcc: {
 ```
 
 In options that do not accept value, just pass `true` instead. Also with options that accept multiple values, pass
-the values as an array to that option:
+the values in an array to that option:
 
 ```js
 gcc: {
