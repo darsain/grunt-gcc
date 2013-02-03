@@ -18,13 +18,13 @@ module.exports = function(grunt) {
 			destination = self.file.dest,
 			async = self.async(),
 			max = grunt.helper('concat', source),
-			min;
+			banner;
 
 		if (typeof options === 'object') {
 			Object.keys(options).forEach(function (key) {
 				switch (key) {
 					case 'banner':
-						min = grunt.template.process(options.banner) + '\n';
+						banner = grunt.template.process(options.banner) + '\n';
 						break;
 					default:
 						gccOptions[key] = options[key];
@@ -39,8 +39,11 @@ module.exports = function(grunt) {
 				async();
 				return;
 			}
-
-			min += stdout;
+                        var min = '';
+                        if (banner) {
+                         min += banner;
+                        }
+                        min += stdout
 			grunt.file.write(destination, min);
 			grunt.log.writeln('File `' + destination + '` created.');
 			grunt.helper('min_max_info', min, max);
