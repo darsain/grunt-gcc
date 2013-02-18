@@ -1,7 +1,7 @@
 {
 	"name": "grunt-gcc",
 	"description": "Minify JavaScript files with Google Closure Compiler.",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"homepage": "https://github.com/Darsain/grunt-gcc",
 	"author": {
 		"name": "Darsain",
@@ -20,7 +20,7 @@
 			"url": "http://opensource.org/licenses/MIT"
 		}
 	],
-	"main": "grunt.js",
+	"main": "Gruntfile.js",
 	"bin": "bin/grunt-gcc",
 	"engines": {
 		"node": "*"
@@ -32,8 +32,8 @@
 		"gcc": "~0.1.0"
 	},
 	"devDependencies": {
-		"grunt-contrib-clean": "~0.3.0",
-		"grunt": "~0.3.17"
+		"grunt": "~0.4.0",
+		"grunt-contrib-jshint": "~0.1.1"
 	},
 	"keywords": [
 		"gruntplugin"

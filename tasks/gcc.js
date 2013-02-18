@@ -11,22 +11,19 @@ module.exports = function(grunt) {
 	var compiler = require('gcc');
 
 	grunt.registerMultiTask('gcc', 'Minify JavaScript files with Closure Compiler.', function () {
-		var self = this,
-			options = self.data.options,
-			gccOptions = {},
-			source = grunt.file.expandFiles(self.file.src),
-			destination = self.file.dest,
-			async = self.async(),
-			max = grunt.helper('concat', source),
-			min = '';
 
+		var options    = this.options();
+		var done       = this.async();
+		var gccOptions = {};
+		var result     = '';
+
+		// Parse options
 		if (typeof options === 'object') {
 			Object.keys(options).forEach(function (key) {
 				switch (key) {
 					case 'banner':
-						var banner = grunt.template.process(options.banner) + '\n';
-						if (banner) {
-							 min += banner;
+						if (options.banner) {
+							result += options.banner + '\n';
 						}
 						break;
 					default:
@@ -35,21 +32,47 @@ module.exports = function(grunt) {
 			});
 		}
 
-		// Compile with Closure Compiler
-		compiler.compile(source, gccOptions, function (error, stdout) {
-			if (error) {
-				grunt.warn(error);
-				async();
-				return;
+		// Iterate over all src-dest file pairs.
+		this.files.forEach(function (f) {
+			var source = f.src.filter(function (filepath) {
+				// Warn on and remove invalid source files (if nonull was set).
+				if (!grunt.file.exists(filepath)) {
+					grunt.log.warn('Source file "' + filepath + '" not found.');
+					return false;
+				} else {
+					return true;
+				}
+			});
+
+			// Error handler
+			function failed(error) {
+				grunt.log.error();
+				grunt.verbose.error(error);
+				grunt.fail.warn('Closure Compiler failed.');
+				done();
 			}
 
-			min += stdout;
-			grunt.file.write(destination, min);
-			grunt.log.writeln('File `' + destination + '` created.');
-			grunt.helper('min_max_info', min, max);
+			// Minify files, warn and fail on error.
+			try {
+				// Compile with Closure Compiler
+				compiler.compile(source, gccOptions, function (error, stdout) {
+					if (error) {
+						failed(error);
+						return;
+					}
 
-			// Task completed
-			async();
+					result += stdout;
+					grunt.file.write(f.dest, result);
+					grunt.log.writeln('File `' + f.dest + '` created.');
+					// Place min max info here, when there will be some standardized grunt lib for it
+
+					// Task completed
+					grunt.log.ok();
+					done();
+				});
+			} catch (error) {
+				failed(error);
+			}
 		});
 	});
 };
