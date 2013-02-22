@@ -1,6 +1,13 @@
-module.exports = function(grunt) {
-	'use strict';
+/*
+ * grunt-gcc
+ * https://github.com/Darsain/grunt-gcc
+ *
+ * Licensed under the MIT license.
+ * http://www.opensource.org/licenses/MIT
+ */
+'use strict';
 
+module.exports = function(grunt) {
 	var path = require('path');
 	var tmpPath = path.join(__dirname, 'test', 'tmp');
 
@@ -12,9 +19,10 @@ module.exports = function(grunt) {
 			options: {
 				jshintrc: '.jshintrc'
 			},
-			gcc: {
-				src: 'tasks/gcc.js'
-			}
+			all: [
+				'Gruntfile.js',
+				'tasks/*.js',
+			],
 		},
 		gcc: {
 			options: {

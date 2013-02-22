@@ -19,8 +19,8 @@ Contributions are welcome! But please, follow these few simple rules:
 
 ---
 
-**Resulting code has to pass JSHint** with options defined in the `.jshintrc` file. You can use `grunt lint` task to
-quickly lint manually, or again, there are amazing plugins dealing with this automatically for a lot of popular editors:
+**Code has to pass JSHint** with options defined in the `.jshintrc` file. You can use `grunt jshint` task to lint
+manually, or again, there are amazing plugins for a lot of popular editors consuming this file and linting as you code:
 
 - [Sublim Text 2](https://github.com/SublimeLinter/SublimeLinter)
 - [TextMate](http://rondevera.github.com/jslintmate/), or [alternative](http://fgnass.posterous.com/jslint-in-textmate)
