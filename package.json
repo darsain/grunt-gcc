@@ -21,7 +21,6 @@
 		}
 	],
 	"main": "Gruntfile.js",
-	"bin": "bin/grunt-gcc",
 	"engines": {
 		"node": "*"
 	},
