@@ -9,6 +9,7 @@ module.exports = function(grunt) {
 	'use strict';
 
 	var path = require('path');
+	var jsonFile = 'package.json';
 	var tmpPath = path.join(__dirname, 'test', 'tmp');
 
 	grunt.initConfig({
@@ -46,7 +47,13 @@ module.exports = function(grunt) {
 					'test/tmp/files.min.js': ['test/src/example.js', 'test/src/example1.js']
 				}
 			}
-		}
+		},
+
+		// Bump up fields in JSON files.
+		bumpup: jsonFile,
+
+		// Commit changes and tag the latest commit with a version from JSON file.
+		tagrelease: jsonFile
 	});
 
 	// Actually load this plugin's task(s).
@@ -55,6 +62,23 @@ module.exports = function(grunt) {
 	// These plugins provide necessary tasks.
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.loadNpmTasks('grunt-tagrelease');
+	grunt.loadNpmTasks('grunt-bumpup');
+
+	// Task for updating the pkg config property. Needs to be run after
+	// bumpup so the next tasks in queue can work with updated values.
+	grunt.registerTask('updatePkg', function () {
+		grunt.config.set('pkg', grunt.file.readJSON(jsonFile));
+	});
+
+	// Release task.
+	grunt.registerTask('release', function (type) {
+		type = type ? type : 'patch';
+		grunt.task.run('jshint');
+		grunt.task.run('bumpup:' + type);
+		grunt.task.run('updatePkg');
+		grunt.task.run('tagrelease');
+	});
 
 	// Whenever the "test" task is run, first clean the "tmp" dir, then run this plugin's task(s).
 	grunt.registerTask('test', ['jshint', 'clean', 'gcc']);
