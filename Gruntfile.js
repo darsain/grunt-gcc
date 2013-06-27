@@ -5,9 +5,9 @@
  * Licensed under the MIT license.
  * http://www.opensource.org/licenses/MIT
  */
-'use strict';
-
 module.exports = function(grunt) {
+	'use strict';
+
 	var path = require('path');
 	var tmpPath = path.join(__dirname, 'test', 'tmp');
 
@@ -15,15 +15,21 @@ module.exports = function(grunt) {
 		meta: {
 			banner: '/*! Example banner <%= grunt.template.today("dd-mmm-yyyy") %> */'
 		},
+
+		// Lint files.
 		jshint: {
 			options: {
 				jshintrc: '.jshintrc'
 			},
-			all: [
-				'Gruntfile.js',
-				'tasks/*.js',
-			],
+			all: ['tasks/*.js']
 		},
+
+		// Clean folders.
+		clean: {
+			dist: ['test/tmp/**', '!test/tmp']
+		},
+
+		// Minify files.
 		gcc: {
 			options: {
 				banner: '<%= meta.banner %>'
@@ -48,19 +54,7 @@ module.exports = function(grunt) {
 
 	// These plugins provide necessary tasks.
 	grunt.loadNpmTasks('grunt-contrib-jshint');
-
-	// Custom cleaning task
-	grunt.registerTask('clean', 'Clean stuff', function () {
-		try {
-			grunt.file.delete(tmpPath);
-			grunt.file.mkdir(tmpPath);
-			grunt.log.ok();
-		} catch (error) {
-			grunt.log.error();
-			grunt.verbose.error(error);
-			grunt.warn('Cleaning failed.');
-		}
-	});
+	grunt.loadNpmTasks('grunt-contrib-clean');
 
 	// Whenever the "test" task is run, first clean the "tmp" dir, then run this plugin's task(s).
 	grunt.registerTask('test', ['jshint', 'clean', 'gcc']);
