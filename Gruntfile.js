@@ -42,10 +42,17 @@ module.exports = function(grunt) {
 				src: ['test/src/example.js', 'test/src/example1.js'],
 				dest: 'test/tmp/srcdest.min.js'
 			},
-			files: {
+			fls: {
 				files: {
-					'test/tmp/files.min.js': ['test/src/example.js', 'test/src/example1.js']
+					'test/tmp/obj1.js': ['test/src/example.js', 'test/src/example1.js'],
+					'test/tmp/obj2.js': ['test/src/example1.js', 'test/src/example.js']
 				}
+			},
+			arr: {
+				files: [
+					{ src: ['test/src/example.js', 'test/src/example1.js'], dest: 'test/tmp/arr1.js' },
+					{ src: ['test/src/example1.js', 'test/src/example.js'], dest: 'test/tmp/arr2.js' }
+				]
 			}
 		},
 

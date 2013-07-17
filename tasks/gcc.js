@@ -12,10 +12,11 @@ module.exports = function(grunt) {
 
 	grunt.registerMultiTask('gcc', 'Minify JavaScript files with Closure Compiler.', function () {
 
-		var options    = this.options();
-		var done       = this.async();
+		var options = this.options();
+		var done = this.async();
 		var gccOptions = {};
-		var result     = '';
+		var banner = '';
+		var completed  = 0;
 
 		// Parse options
 		if (typeof options === 'object') {
@@ -23,7 +24,7 @@ module.exports = function(grunt) {
 				switch (key) {
 					case 'banner':
 						if (options.banner) {
-							result += options.banner + '\n';
+							banner = options.banner + '\n';
 						}
 						break;
 					default:
@@ -33,7 +34,8 @@ module.exports = function(grunt) {
 		}
 
 		// Iterate over all src-dest file pairs.
-		this.files.forEach(function (f) {
+		this.files.forEach(function (f, i, files) {
+			var result = banner;
 			var source = f.src.filter(function (filepath) {
 				// Warn on and remove invalid source files (if nonull was set).
 				if (!grunt.file.exists(filepath)) {
@@ -52,27 +54,27 @@ module.exports = function(grunt) {
 				done();
 			}
 
-			// Minify files, warn and fail on error.
-			try {
-				// Compile with Closure Compiler
-				compiler.compile(source, gccOptions, function (error, stdout) {
-					if (error) {
-						failed(error);
-						return;
-					}
+			// Compile with Closure Compiler
+			compiler.compile(source, gccOptions, function (error, stdout) {
+				if (error) {
+					failed(error);
+					return;
+				}
+				completed++;
 
-					result += stdout;
-					grunt.file.write(f.dest, result);
-					grunt.log.writeln('File `' + f.dest + '` created.');
-					// Place min max info here, when there will be some standardized grunt lib for it
+				result += stdout;
+				grunt.file.write(f.dest, result);
+				grunt.log.writeln('File `' + f.dest + '` created.');
+				// Place min max info here, when there will be some standardized grunt lib for it
 
-					// Task completed
-					grunt.log.ok();
+				// File completed
+				grunt.log.ok();
+
+				// Trigger done on last file
+				if (completed >= files.length) {
 					done();
-				});
-			} catch (error) {
-				failed(error);
-			}
+				}
+			});
 		});
 	});
 };
