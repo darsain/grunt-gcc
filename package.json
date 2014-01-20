@@ -28,7 +28,8 @@
 		"test": "grunt test"
 	},
 	"dependencies": {
-		"gcc": "1.x"
+		"gcc": "1.x",
+		"grunt-lib-contrib": "~0.6.1"
 	},
 	"devDependencies": {
 		"grunt-contrib-jshint": "~0.6.0",

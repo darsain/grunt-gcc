@@ -8,6 +8,7 @@
 module.exports = function(grunt) {
 	'use strict';
 
+	var contrib = require('grunt-lib-contrib').init(grunt);
 	var compiler = require('gcc');
 
 	grunt.registerMultiTask('gcc', 'Minify JavaScript files with Closure Compiler.', function () {
@@ -16,6 +17,7 @@ module.exports = function(grunt) {
 		var done = this.async();
 		var gccOptions = {};
 		var banner = '';
+		var report = false;
 		var completed  = 0;
 
 		// Parse options
@@ -26,6 +28,9 @@ module.exports = function(grunt) {
 						if (options.banner) {
 							banner = options.banner + '\n';
 						}
+						break;
+					case 'report':
+						report = options.report;
 						break;
 					default:
 						gccOptions[key] = options[key];
@@ -65,7 +70,14 @@ module.exports = function(grunt) {
 				result += stdout;
 				grunt.file.write(f.dest, result);
 				grunt.log.writeln('File `' + f.dest + '` created.');
-				// Place min max info here, when there will be some standardized grunt lib for it
+
+				// Print min-max info
+				if(report) {
+					var preMinimize = source.reduce(function(contents, file) {
+						return contents + grunt.file.read(file);
+					}, "");
+					contrib.minMaxInfo(result, preMinimize, options.report);
+				}
 
 				// File completed
 				grunt.log.ok();
