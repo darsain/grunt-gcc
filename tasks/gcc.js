@@ -60,10 +60,13 @@ module.exports = function(grunt) {
 			}
 
 			// Compile with Closure Compiler
-			compiler.compile(source, gccOptions, function (error, stdout) {
+			compiler.compile(source, gccOptions, function (error, stdout, stderr) {
 				if (error) {
 					failed(error);
 					return;
+				}
+				if(stderr !== '' && gccOptions.warning_level !== 'QUIET') {//log gcc warnings
+					grunt.log.warn(stderr);
 				}
 				completed++;
 
