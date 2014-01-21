@@ -5,7 +5,11 @@
 	var foo = 42,
 		bar = 'lol\x0bwat';
 
-	// Expand window
+	/**
+	 * foobar.
+	 *
+	 * @return {Void}
+	 */
 	window.tsss = function () {
 		return foo + bar;
 	};

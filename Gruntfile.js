@@ -33,7 +33,8 @@ module.exports = function(grunt) {
 		// Minify files.
 		gcc: {
 			options: {
-				banner: '<%= meta.banner %>'
+				banner: '<%= meta.banner %>',
+				report: 'gzip'
 			},
 			dist: {
 				options: {
@@ -53,6 +54,14 @@ module.exports = function(grunt) {
 					{ src: ['test/src/example.js', 'test/src/example1.js'], dest: 'test/tmp/arr1.js' },
 					{ src: ['test/src/example1.js', 'test/src/example.js'], dest: 'test/tmp/arr2.js' }
 				]
+			},
+			warn: {
+				options: {
+					compilation_level: 'ADVANCED_OPTIMIZATIONS',
+					warning_level: 'VERBOSE'
+				},
+				src: ['test/src/example.js'], //example1.js will give fatal errors as jQuery is not defined as an extern
+				dest: 'test/tmp/srcdest.min.js'
 			}
 		},
 
