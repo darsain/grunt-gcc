@@ -4,6 +4,8 @@
 
 For grunt 0.3, install the latest `0.1.x` version. Grunt 0.4 support starts with version `0.2.0`.
 
+#### [Changelog](https://github.com/darsain/grunt-gcc/releases)
+
 ## Installation
 
 ```
@@ -70,6 +72,16 @@ gcc: {
 	}
 }
 ```
+
+---
+
+### report:
+
+Minification reporting. Default is `false`. Can be:
+
+- `false` - no reporting
+- `min` - report original and minified sizes
+- `gzip` - report original, minified, and minified & gzipped sizes
 
 ---
 
