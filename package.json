@@ -1,7 +1,7 @@
 {
 	"name": "grunt-gcc",
 	"description": "Minify JavaScript files with Google Closure Compiler.",
-	"version": "0.2.2",
+	"version": "0.3.0",
 	"homepage": "https://github.com/darsain/grunt-gcc",
 	"author": {
 		"name": "Darsain",
