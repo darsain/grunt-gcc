@@ -1,5 +1,7 @@
 # grunt-gcc
 
+**This plugin is being deprecated in favor of [grunt-closurecompiler](https://npmjs.org/package/grunt-closurecompiler), and will be eventually unpublished. Please migrate.**
+
 [Grunt](http://gruntjs.com/) task for minifying JavaScript files with Google Closure Compiler.
 
 For grunt 0.3, install the latest `0.1.x` version. Grunt 0.4 support starts with version `0.2.0`.

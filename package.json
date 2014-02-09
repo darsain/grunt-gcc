@@ -1,7 +1,7 @@
 {
 	"name": "grunt-gcc",
-	"description": "Minify JavaScript files with Google Closure Compiler.",
-	"version": "0.3.0",
+	"description": "This plugin is being deprecated in favor of grunt-closurecompiler, and will be eventually unpublished. Please migrate.",
+	"version": "0.3.1",
 	"homepage": "https://github.com/darsain/grunt-gcc",
 	"author": {
 		"name": "Darsain",
@@ -37,8 +37,5 @@
 		"grunt-tagrelease": "~0.2.0",
 		"grunt-bumpup": "~0.2.0",
 		"grunt": "~0.4.0"
-	},
-	"keywords": [
-		"gruntplugin"
-	]
+	}
 }

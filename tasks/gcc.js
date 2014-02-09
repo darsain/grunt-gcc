@@ -12,6 +12,7 @@ module.exports = function(grunt) {
 	var compiler = require('gcc');
 
 	grunt.registerMultiTask('gcc', 'Minify JavaScript files with Closure Compiler.', function () {
+		grunt.log.warn('grunt-gcc is being deprecated in favor of grunt-closurecompiler. Please migrate.');
 
 		var options = this.options({
 			report: false
